@@ -24,7 +24,12 @@ map<char, Character> CharacterLookup = {
     { '1', { "      ", "     |", "     |", "     |", "      "} },
     { '2', { " ---- ", "     |", " ---- ", "|     ", " ---- "} },
     { '3', { " ---- ", "     |", " ---- ", "     |", " ---- "} },
-    { '4', { "      ", "     |", " ---- ", "     |", "     |"} },
+    { '4', { "      ", "|    |", " ---- ", "     |", "      "} },
+    { '5', { " ---- ", "|     ", " ---- ", "     |", " ---- "} },
+    { '6', { " ---- ", "|     ", " ---- ", "|    |", " ---- "} },
+    { '7', { " ---- ", "     |", "     |", "     |", "      "} },
+    { '8', { " ---- ", "|    |", " ---- ", "|    |", " ---- "} },
+    { '9', { " ---- ", "|    |", " ---- ", "     |", "      "} },
 };
 
 class Renderer
@@ -34,7 +39,6 @@ public:
 };
 void Renderer::RenderString(string inputString)
 {
-    cout << inputString << endl;
     for(int row = 0; row < CHARACTER_ROW_COUNT; ++row)
     {
         for(int pos = 0; pos < inputString.length(); ++pos)
@@ -42,7 +46,6 @@ void Renderer::RenderString(string inputString)
             char ch = inputString[pos];
             Character character = CharacterLookup.at(ch);
             cout << character.RowData[row];
-            cout << "  "; // need some space between characters for readability
         }
         cout << endl;
     }
@@ -52,7 +55,7 @@ void Renderer::RenderString(string inputString)
 int main(int argc, char* argv[])
 {
     Renderer renderer;
-    renderer.RenderString("012");
+    renderer.RenderString("0123456789");
     //renderer.RenderString("1");
     //renderer.RenderString("2");
     return 0;
