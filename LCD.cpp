@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "Renderer.h"
+#include "SegmentsStringRenderer.h"
 #include <Windows.h>
 
 int main(int argc, char* argv[])
@@ -12,6 +13,9 @@ int main(int argc, char* argv[])
 
     Renderer renderer;
     renderer.RenderString("0123456789");
+
+    SegmentsStringRenderer segmentsRenderer;
+    segmentsRenderer.RenderString("0123456789");
 
     return 0;
 }
