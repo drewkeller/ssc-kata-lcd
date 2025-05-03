@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <Windows.h>
 
 using namespace std;
 
@@ -17,19 +18,20 @@ struct Character
     string RowData[CHARACTER_ROW_COUNT];
 };
 
+// using unicode one-eighth blocks: https://www.unicode.org/charts/PDF/U2580.pdf
 map<char, Character> CharacterLookup = {
     //        ROW1      ROW2      ROW3      ROW4       ROW5
     //        ------    ------    ------    ------     ----
-    { '0', { " ---- ", "|    |", "|    |", "|    |", " ---- "} },
-    { '1', { "      ", "     |", "     |", "     |", "      "} },
-    { '2', { " ---- ", "     |", " ---- ", "|     ", " ---- "} },
-    { '3', { " ---- ", "     |", " ---- ", "     |", " ---- "} },
-    { '4', { "      ", "|    |", " ---- ", "     |", "      "} },
-    { '5', { " ---- ", "|     ", " ---- ", "     |", " ---- "} },
-    { '6', { " ---- ", "|     ", " ---- ", "|    |", " ---- "} },
-    { '7', { " ---- ", "     |", "     |", "     |", "      "} },
-    { '8', { " ---- ", "|    |", " ---- ", "|    |", " ---- "} },
-    { '9', { " ---- ", "|    |", " ---- ", "     |", "      "} },
+    { '0', { " ▁▁▁▁ ", "▕    ▏", "▕    ▏", "▕    ▏", " ▔▔▔▔ "} },
+    { '1', { "      ", "     ▏", "     ▏", "     ▏", "      "} },
+    { '2', { " ▁▁▁▁ ", "     ▏", " ▬▬▬▬ ", "▕     ", " ▔▔▔▔ "} },
+    { '3', { " ▁▁▁▁ ", "     ▏", " ▬▬▬▬ ", "     ▏", " ▔▔▔▔ "} },
+    { '4', { "      ", "▕    ▏", " ▬▬▬▬ ", "     ▏", "      "} },
+    { '5', { " ▁▁▁▁ ", "▕     ", " ▬▬▬▬ ", "     ▏", " ▔▔▔▔ "} },
+    { '6', { " ▁▁▁▁ ", "▕     ", " ▬▬▬▬ ", "▕    ▏", " ▔▔▔▔ "} },
+    { '7', { " ▁▁▁▁ ", "     ▏", "     ▏", "     ▏", "      "} },
+    { '8', { " ▁▁▁▁ ", "▕    ▏", " ▬▬▬▬ ", "▕    ▏", " ▔▔▔▔ "} },
+    { '9', { " ▁▁▁▁ ", "▕    ▏", " ▬▬▬▬ ", "     ▏", "      "} },
 };
 
 class Renderer
@@ -69,6 +71,10 @@ void Renderer::RenderString(string inputString)
 
 int main(int argc, char* argv[])
 {
+    // see https://stackoverflow.com/questions/45575863/how-to-print-utf-8-strings-to-stdcout-on-windows
+    SetConsoleOutputCP(CP_UTF8);
+    setvbuf(stdout, nullptr, _IOFBF, 1000);
+
     Renderer renderer;
     renderer.RenderString("0123456789");
     //renderer.RenderString("1");
