@@ -11,7 +11,7 @@
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "Renderer.cpp", 
-                "SegmentsStringRenderer.cpp"
+                "NineSegmentRenderer.cpp"
             ],
             "options": {
                 "cwd": "${fileDirname}"
