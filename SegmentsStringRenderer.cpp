@@ -1,4 +1,8 @@
 #include "SegmentsStringRenderer.h"
+#include <iostream>
+#include <map>
+
+using namespace std;
 
 map<char, SegmentsCharacter> SegmentsCharacterLookup = {
     //       ------- SEGMENTS --------

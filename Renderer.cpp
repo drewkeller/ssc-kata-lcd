@@ -1,4 +1,8 @@
 #include "Renderer.h"
+#include <iostream>
+#include <map>
+
+using namespace std;
 
 map<char, Character> CharacterLookup = {
     //        ROW1      ROW2      ROW3      ROW4       ROW5

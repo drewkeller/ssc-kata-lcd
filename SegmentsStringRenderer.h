@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.h"
+#include <string>
 
 constexpr int SEGMENTS_COUNT = 9;
 struct SegmentsCharacter
@@ -10,14 +11,14 @@ struct SegmentsCharacter
 
 struct SegmentCharacter
 {
-    string PrintedCharacters;
-    string NonprintedCharacters;
+    std::string PrintedCharacters;
+    std::string NonprintedCharacters;
 };
 
 class SegmentsStringRenderer
 {
     public:
-    void RenderString(string inputString);
+    void RenderString(std::string inputString);
     void RenderSegment(SegmentsCharacter character, int segment);
     void RenderLeftColumnSpace();
     void RenderMiddleColumnSpace();

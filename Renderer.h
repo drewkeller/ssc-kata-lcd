@@ -1,14 +1,15 @@
 #pragma once
 
 #include "common.h"
+#include <string>
 
 struct Character
 {
-    string RowData[CHARACTER_ROW_COUNT];
+    std::string RowData[CHARACTER_ROW_COUNT];
 };
 
 class Renderer
 {
 public:
-    void RenderString(string inputString);
+    void RenderString(std::string inputString);
 };
