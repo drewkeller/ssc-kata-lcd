@@ -28,14 +28,15 @@ SymbolsMap DummySymbolsMap = {
 
 template<>
 Renderer<0>::Renderer()
-: Renderer<0>(DummySegmentsCharacterMap, BASE_HEIGHT, BASE_WIDTH, DummySymbolsMap)
+: Renderer<0>(DummySegmentsCharacterMap, BASE_HEIGHT, BASE_WIDTH, BASE_SPACING, DummySymbolsMap)
 {
 }
 
 template<int N>
-Renderer<N>::Renderer(const std::map<char,SegmentsGlyph<N>>& characterMap, const int height, const int width, const SymbolsMap & symbolsMap)
+Renderer<N>::Renderer(const std::map<char,SegmentsGlyph<N>>& characterMap, const int height, const int width, const int spacing, const SymbolsMap & symbolsMap)
 : Height(height)
 , Width(width)
+, Spacing(spacing)
 , Symbols(symbolsMap)
 {
 }
@@ -56,8 +57,6 @@ void Renderer<N>::RenderSegment(SegmentsGlyph<N> character, int segment)
 template<int N>
 void Renderer<N>::RenderString(const string& inputString)
 {
-    const string& spacer = "   "; // need some space between characters for readability
-    
     cout << "Rendering: '" << inputString << "'" << endl;
     for(int row = 0; row < Height; ++row)
     {
@@ -65,12 +64,12 @@ void Renderer<N>::RenderString(const string& inputString)
         {
             char ch = inputString[pos];
             RenderCharacterRow(ch, row);
-            cout << spacer;
+            cout << string(Spacing, ' ');
         }
         cout << endl;
     }
 
-    RenderDebugLine(inputString, Width, spacer.length());
+    RenderDebugLine(inputString, Width, Spacing);
 }
 
 template<int N>
@@ -87,18 +86,12 @@ void Renderer<N>::RenderDebugLine(const string& inputString, int characterWidth,
     for(int pos = 0; pos < inputString.length(); ++pos)
     {
         // print across character width, leaving one position for the actual character
-        for(int space = 0; space < characterWidth - 1; ++space)
-        {
-            cout << " ";
-        }
+        cout << string(Width - 1, ' ');
         
         cout << inputString[pos];
 
         // print space between rendered characters
-        for(int space = 0; space < spacerWidth; ++space)
-        {
-            cout << " ";
-        }
+        cout << string(spacerWidth, ' ');
     }
     cout << endl;
 }

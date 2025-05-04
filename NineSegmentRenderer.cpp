@@ -6,6 +6,7 @@ using namespace std;
 
 constexpr int NINE_SEG_RENDERER_HEIGHT = 5;
 constexpr int NINE_SEG_RENDERER_WIDTH = 6;
+constexpr int NINE_SEG_SPACING = 3;
 
 map<char, NineSegmentGlyph> NineSegmentsCharacterMap = {
     //       ------- SEGMENTS --------
@@ -35,7 +36,7 @@ SymbolsMap NineSegmentSymbolsMap = {
 };
 
 NineSegmentRenderer::NineSegmentRenderer()
-: Renderer(NineSegmentsCharacterMap, NINE_SEG_RENDERER_HEIGHT, NINE_SEG_RENDERER_WIDTH, NineSegmentSymbolsMap)
+: Renderer(NineSegmentsCharacterMap, NINE_SEG_RENDERER_HEIGHT, NINE_SEG_RENDERER_WIDTH, NINE_SEG_SPACING, NineSegmentSymbolsMap)
 {}
 
 void NineSegmentRenderer::RenderLeftColumnSpace()

@@ -6,6 +6,7 @@
 
 constexpr int BASE_HEIGHT = 5;
 constexpr int BASE_WIDTH = 6;
+constexpr int BASE_SPACING = 3;
 
 struct BaseGlyphWithStrings
 {
@@ -32,10 +33,11 @@ class Renderer
 public:
     int Height;
     int Width;
+    int Spacing;
     const std::map<char, SegmentsGlyph<N> > CharacterMap;
     const SymbolsMap& Symbols;
     Renderer();
-    Renderer(const std::map<char, SegmentsGlyph<N> >& characterMap, const int height, const int width, const SymbolsMap& symbolsMap);
+    Renderer(const std::map<char, SegmentsGlyph<N> >& characterMap, const int height, const int width, const int spacing, const SymbolsMap& symbolsMap);
     virtual void RenderString(const std::string& inputString);
     virtual void RenderCharacterRow(char ch, int rowIndex);
     virtual void RenderDebugLine(const std::string& inputString, int characterWidth, int spacerWidth);
