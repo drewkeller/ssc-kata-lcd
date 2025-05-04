@@ -7,10 +7,11 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "LCD.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "Renderer.cpp", 
+                "SevenSegmentRenderer.cpp",
                 "NineSegmentRenderer.cpp"
             ],
             "options": {

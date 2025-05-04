@@ -1,5 +1,6 @@
 #include "common.h"
 #include "Renderer.h"
+#include "SevenSegmentRenderer.h"
 #include "NineSegmentRenderer.h"
 #include <Windows.h>
 
@@ -12,8 +13,11 @@ int main(int argc, char* argv[])
     Renderer<0> renderer;
     renderer.RenderString("0123456789");
 
-    NineSegmentRenderer segmentsRenderer;
-    segmentsRenderer.RenderString("0123456789");
+    NineSegmentRenderer nineSegmentsRenderer;
+    nineSegmentsRenderer.RenderString("0123456789");
+
+    SevenSegmentRenderer sevenSegmentsRenderer;
+    sevenSegmentsRenderer.RenderString("0123456789");
 
     return 0;
 }
