@@ -24,20 +24,22 @@ map<char, NineSegmentGlyph> NineSegmentsCharacterMap = {
 };
 
 SymbolsMap NineSegmentSymbolsMap = {
-    { 0, { "----", "    " } },
-    { 1, { "|", " " } }, 
-    { 2, { "|", " " } },
-    { 3, { "|", " " } }, 
-    { 4, { "----", "    " } }, 
-    { 5, { "|", " " } },
-    { 6, { "|", " " } }, 
-    { 7, { "|", " " } },
-    { 8, { "----", "    " } },
+    { 0, { "----", "    ", TOP } },
+    { 1, { "|",    " ",    LEFT } }, 
+    { 2, { "|",    " ",    RIGHT } },
+    { 3, { "|",    " ",    LEFT } }, 
+    { 4, { "----", "    ", BOTTOM } }, 
+    { 5, { "|",    " ",    RIGHT } },
+    { 6, { "|",    " ",    LEFT } }, 
+    { 7, { "|",    " ",    RIGHT } },
+    { 8, { "----", "    ", BOTTOM } },
 };
 
 NineSegmentRenderer::NineSegmentRenderer()
 : Renderer(NineSegmentsCharacterMap, NINE_SEG_RENDERER_HEIGHT, NINE_SEG_RENDERER_WIDTH, NINE_SEG_SPACING, NineSegmentSymbolsMap)
-{}
+{
+    Name = "NineSegment";
+}
 
 void NineSegmentRenderer::RenderLeftColumnSpace()
 {
@@ -46,7 +48,10 @@ void NineSegmentRenderer::RenderLeftColumnSpace()
 
 void NineSegmentRenderer::RenderMiddleColumnSpace()
 {
-    cout << "    ";
+    for(int posX = 1; posX <= ScaleX; posX++)
+    {
+        cout << "    ";
+    }
 }
 
 void NineSegmentRenderer::RenderRightColumnSpace()

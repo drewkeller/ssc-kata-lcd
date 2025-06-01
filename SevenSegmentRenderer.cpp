@@ -7,6 +7,7 @@ using namespace std;
 constexpr int SEVEN_SEG_RENDERER_HEIGHT = 3;
 constexpr int SEVEN_SEG_RENDERER_WIDTH = 3;
 constexpr int SEVEN_SEG_SPACING = 0;
+constexpr int BLANK_SEGMENT = 0xFF;
 
 map<char, SevenSegmentGlyph> SevenSegmentsCharacterMap = {
     //       ------- SEGMENTS --------
@@ -23,26 +24,33 @@ map<char, SevenSegmentGlyph> SevenSegmentsCharacterMap = {
     { '9', { 1, 1, 1, 1, 0, 1, 1 } },
 };
 
+constexpr bool H = true;  // Horizontal
+constexpr bool V = false; // Vertical: !IsHorizontal
 SymbolsMap SevenSegmentSymbolsMap = {
-    { 0, { " _ ", "   " } },
-    { 1, { "|", " " } }, 
-    { 2, { "|", " " } }, 
-    { 3, { "_", " " } },
-    { 4, { "|", " " } }, 
-    { 5, { "|", " " } }, 
-    { 6, { "_", " " } },
+    { BLANK_SEGMENT, { " ", " ", LEFT }},
+    { 0, { "_", " ", TOP } },
+    { 1, { "|", " ", LEFT } }, 
+    { 2, { "|", " ", RIGHT } }, 
+    { 3, { "_", " ", BOTTOM } },
+    { 4, { "|", " ", LEFT } }, 
+    { 5, { "|", " ", RIGHT } }, 
+    { 6, { "_", " ", BOTTOM } },
 };
 
 SevenSegmentRenderer::SevenSegmentRenderer()
 : Renderer(SevenSegmentsCharacterMap, SEVEN_SEG_RENDERER_HEIGHT, SEVEN_SEG_RENDERER_WIDTH, SEVEN_SEG_SPACING, SevenSegmentSymbolsMap)
-{}
+{
+    Name = "SevenSegment";
+}
 
 void SevenSegmentRenderer::RenderCharacterRow(char ch, int rowIndex)
 {
     SevenSegmentGlyph character = SevenSegmentsCharacterMap.at(ch);
     if(rowIndex == 0)
     {
+        RenderSegment(character, BLANK_SEGMENT);
         RenderSegment(character, 0);
+        RenderSegment(character, BLANK_SEGMENT);
     }
     else if (rowIndex == 1) {
         RenderSegment(character, 1);

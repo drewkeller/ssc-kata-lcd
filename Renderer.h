@@ -19,10 +19,15 @@ struct SegmentsGlyph
     int Segments[N];
 };
 
+enum SymbolPosition {
+    TOP, LEFT, RIGHT, BOTTOM
+};
+
 struct SegmentSymbol
 {
     std::string PrintedCharacters;
     std::string NonprintedCharacters;
+    SymbolPosition SymbolPosition;
 };
 
 using SymbolsMap = std::map<int, SegmentSymbol>;
@@ -31,9 +36,12 @@ template <int N>
 class Renderer
 {
 public:
+    std::string Name;
     int Height;
     int Width;
     int Spacing;
+    int ScaleX;
+    int ScaleY;
     const std::map<char, SegmentsGlyph<N> > CharacterMap;
     const SymbolsMap& Symbols;
     Renderer();
@@ -42,5 +50,6 @@ public:
     virtual void RenderCharacterRow(char ch, int rowIndex);
     virtual void RenderDebugLine(const std::string& inputString, int characterWidth, int spacerWidth);
 
+    Renderer<N>& SetScale(int scaleX, int scaleY);
     void RenderSegment(SegmentsGlyph<N> character, int segment);
 };

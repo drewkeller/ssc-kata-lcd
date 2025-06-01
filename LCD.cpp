@@ -10,14 +10,21 @@ int main(int argc, char* argv[])
     SetConsoleOutputCP(CP_UTF8);
     setvbuf(stdout, nullptr, _IOFBF, 1000);
 
-    Renderer<0> renderer;
-    renderer.RenderString("0123456789");
+    std::string testString = "0123456789";
+
+    // Renderer<0> renderer;
+    // renderer.RenderString(testString);
 
     NineSegmentRenderer nineSegmentsRenderer;
-    nineSegmentsRenderer.RenderString("0123456789");
+    nineSegmentsRenderer.RenderString(testString);
+    nineSegmentsRenderer.SetScale(1, 2).RenderString(testString);
+    nineSegmentsRenderer.SetScale(2, 2).RenderString(testString);
 
     SevenSegmentRenderer sevenSegmentsRenderer;
-    sevenSegmentsRenderer.RenderString("0123456789");
+    sevenSegmentsRenderer.RenderString(testString);
+    sevenSegmentsRenderer.SetScale(2, 1).RenderString(testString);
+    sevenSegmentsRenderer.SetScale(3, 1).RenderString(testString);
+    sevenSegmentsRenderer.SetScale(2, 2).RenderString(testString);
 
     return 0;
 }

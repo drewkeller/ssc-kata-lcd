@@ -34,30 +34,77 @@ Renderer<0>::Renderer()
 
 template<int N>
 Renderer<N>::Renderer(const std::map<char,SegmentsGlyph<N>>& characterMap, const int height, const int width, const int spacing, const SymbolsMap & symbolsMap)
-: Height(height)
+: Name("")
+, Height(height)
 , Width(width)
 , Spacing(spacing)
 , Symbols(symbolsMap)
+, ScaleX(1)
+, ScaleY(1)
 {
 }
 
 template<int N>
-void Renderer<N>::RenderSegment(SegmentsGlyph<N> character, int segment)
+Renderer<N>& Renderer<N>::SetScale(int scaleX, int scaleY)
 {
-    if(character.Segments[segment] == 0)
+    if(scaleX > 0 && scaleX <= 10 ) {
+        ScaleX = scaleX;
+    }
+    if(scaleX > 0 && scaleX <= 10 ) {
+        ScaleY = scaleY;
+    }
+    return *this;
+}
+
+template<int N>
+void Renderer<N>::RenderSegment(SegmentsGlyph<N> character, int segmentIndex)
+{
+    bool isSegmentOn = character.Segments[segmentIndex] == 1;
+    SegmentSymbol segment = Symbols.at(segmentIndex);
+    int charCounter = ScaleX - 2;
+
+    std::string leftChar = isSegmentOn ? segment.PrintedCharacters : segment.NonprintedCharacters;
+    std::string rightChar = isSegmentOn ? segment.PrintedCharacters : segment.NonprintedCharacters;
+    std::string midChar = isSegmentOn ? segment.PrintedCharacters : segment.NonprintedCharacters;
+
+    if(ScaleX > 1 && segment.SymbolPosition == RIGHT) {
+        leftChar = segment.NonprintedCharacters;
+        midChar = segment.NonprintedCharacters;
+    }
+    if(ScaleX > 1 && segment.SymbolPosition == LEFT) {
+        rightChar = segment.NonprintedCharacters;
+        midChar = segment.NonprintedCharacters;
+    }
+
+    // render leftmost position
+    if(segment.SymbolPosition == LEFT)
     {
-        std::cout << Symbols.at(segment).NonprintedCharacters;
-    } 
-    else if(character.Segments[segment] == 1)
-    {                    
-        std::cout << Symbols.at(segment).PrintedCharacters;
+        std::cout << leftChar;
+    }
+
+    // render middle characters
+    if(segment.SymbolPosition == TOP || segment.SymbolPosition == BOTTOM)
+    {
+        for(int midChars = 1; midChars <= ScaleX; midChars++)
+        {
+            std::cout << midChar;
+        }
+    }
+
+    // render rightmost position
+    if(segment.SymbolPosition == RIGHT)
+    {
+        std::cout << rightChar;
     }
 }
 
 template<int N>
 void Renderer<N>::RenderString(const string& inputString)
 {
-    cout << "Rendering: '" << inputString << "'" << endl;
+    cout << "Rendering: '" << inputString << "' ";
+    cout << "(" << Name << ") ";
+    cout << "Scale: x=" << ScaleX << ", y=" << ScaleY << endl;
+    
     for(int row = 0; row < Height; ++row)
     {
         for(int pos = 0; pos < inputString.length(); ++pos)
@@ -86,7 +133,8 @@ void Renderer<N>::RenderDebugLine(const string& inputString, int characterWidth,
     for(int pos = 0; pos < inputString.length(); ++pos)
     {
         // print across character width, leaving one position for the actual character
-        cout << string(Width - 1, ' ');
+        int width = (Width - 2) * ScaleX + 2;
+        if(width > 0) cout << string(width - 1, ' ');
         
         cout << inputString[pos];
 
