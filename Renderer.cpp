@@ -57,7 +57,7 @@ Renderer<N>& Renderer<N>::SetScale(int scaleX, int scaleY)
 }
 
 template<int N>
-void Renderer<N>::RenderSegment(SegmentsGlyph<N> character, int segmentIndex)
+void Renderer<N>::RenderSegment(SegmentsGlyph<N> character, int segmentIndex, int scaledRowIndex)
 {
     bool isSegmentOn = character.Segments[segmentIndex] == 1;
     SegmentSymbol segment = Symbols.at(segmentIndex);
@@ -67,6 +67,13 @@ void Renderer<N>::RenderSegment(SegmentsGlyph<N> character, int segmentIndex)
     std::string rightChar = isSegmentOn ? segment.PrintedCharacters : segment.NonprintedCharacters;
     std::string midChar = isSegmentOn ? segment.PrintedCharacters : segment.NonprintedCharacters;
 
+    if(scaledRowIndex + 1 < ScaleY && segment.SymbolPosition == BOTTOM
+        || scaledRowIndex > 0 && segment.SymbolPosition == TOP)
+    {
+        leftChar = segment.NonprintedCharacters;
+        midChar = segment.NonprintedCharacters;
+        rightChar = segment.NonprintedCharacters;
+    }
     if(ScaleX > 1 && segment.SymbolPosition == RIGHT) {
         leftChar = segment.NonprintedCharacters;
         midChar = segment.NonprintedCharacters;
@@ -107,23 +114,31 @@ void Renderer<N>::RenderString(const string& inputString)
     
     for(int row = 0; row < Height; ++row)
     {
-        for(int pos = 0; pos < inputString.length(); ++pos)
+        for(int scaledRowIndex = 0; scaledRowIndex < ScaleY; scaledRowIndex++)
         {
-            char ch = inputString[pos];
-            RenderCharacterRow(ch, row);
-            cout << string(Spacing, ' ');
+            for(int pos = 0; pos < inputString.length(); ++pos)
+            {
+                char ch = inputString[pos];
+                RenderCharacterRow(ch, row, scaledRowIndex);
+            }
+            RenderLineEnd(row, scaledRowIndex);
         }
-        cout << endl;
     }
 
     RenderDebugLine(inputString, Width, Spacing);
 }
 
 template<int N>
-void Renderer<N>::RenderCharacterRow(char ch, int rowIndex)
+void Renderer<N>::RenderCharacterRow(char ch, int rowIndex, int scaledRowIndex)
 {
     BaseGlyphWithStrings character = BaseCharacterMap.at(ch);
     cout << character.RowData[rowIndex];
+}
+
+template<int N>
+void Renderer<N>::RenderLineEnd(int rowIndex, int scaledRowIndex)
+{
+    cout << endl;
 }
 
 template<int N>
@@ -137,11 +152,8 @@ void Renderer<N>::RenderDebugLine(const string& inputString, int characterWidth,
         if(width > 0) cout << string(width - 1, ' ');
         
         cout << inputString[pos];
-
-        // print space between rendered characters
-        cout << string(spacerWidth, ' ');
     }
-    cout << endl;
+    cout << endl << endl;
 }
 
 template class Renderer<0>;

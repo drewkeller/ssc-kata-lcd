@@ -47,9 +47,10 @@ public:
     Renderer();
     Renderer(const std::map<char, SegmentsGlyph<N> >& characterMap, const int height, const int width, const int spacing, const SymbolsMap& symbolsMap);
     virtual void RenderString(const std::string& inputString);
-    virtual void RenderCharacterRow(char ch, int rowIndex);
+    virtual void RenderCharacterRow(char ch, int rowIndex, int scaledRowIndex);
+    virtual void RenderLineEnd(int rowIndex, int scaledRowIndex);
     virtual void RenderDebugLine(const std::string& inputString, int characterWidth, int spacerWidth);
 
     Renderer<N>& SetScale(int scaleX, int scaleY);
-    void RenderSegment(SegmentsGlyph<N> character, int segment);
+    void RenderSegment(SegmentsGlyph<N> character, int segment, int scaledRowIndex);
 };

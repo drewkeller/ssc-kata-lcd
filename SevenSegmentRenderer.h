@@ -10,5 +10,6 @@ class SevenSegmentRenderer : public Renderer<SEVEN_SEGMENTS_COUNT>
 {
     public:
     SevenSegmentRenderer();
-    virtual void RenderCharacterRow(char ch, int rowIndex) override;
+    virtual void RenderCharacterRow(char ch, int rowIndex, int scaledRowIndex) override;
+    virtual void RenderLineEnd(int rowIndex, int scaledRowIndex) override;
 };

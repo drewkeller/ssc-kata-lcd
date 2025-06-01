@@ -24,7 +24,9 @@ int main(int argc, char* argv[])
     sevenSegmentsRenderer.RenderString(testString);
     sevenSegmentsRenderer.SetScale(2, 1).RenderString(testString);
     sevenSegmentsRenderer.SetScale(3, 1).RenderString(testString);
-    sevenSegmentsRenderer.SetScale(2, 2).RenderString(testString);
+    sevenSegmentsRenderer.SetScale(1, 2).RenderString(testString);
+    sevenSegmentsRenderer.SetScale(1, 3).RenderString(testString);
+    sevenSegmentsRenderer.SetScale(5, 3).RenderString(testString);
 
     return 0;
 }

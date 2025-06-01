@@ -43,25 +43,41 @@ SevenSegmentRenderer::SevenSegmentRenderer()
     Name = "SevenSegment";
 }
 
-void SevenSegmentRenderer::RenderCharacterRow(char ch, int rowIndex)
+void SevenSegmentRenderer::RenderCharacterRow(char ch, int rowIndex, int scaledRowIndex)
 {
     SevenSegmentGlyph character = SevenSegmentsCharacterMap.at(ch);
     if(rowIndex == 0)
     {
-        RenderSegment(character, BLANK_SEGMENT);
-        RenderSegment(character, 0);
-        RenderSegment(character, BLANK_SEGMENT);
+        // only print for the top iteration of the top row
+        // to avoid printing empty lines
+        if(scaledRowIndex == 0)
+        {
+            RenderSegment(character, BLANK_SEGMENT, scaledRowIndex);
+            RenderSegment(character, 0, scaledRowIndex);
+            RenderSegment(character, BLANK_SEGMENT, scaledRowIndex);
+            cout << string(Spacing, ' ');
+        }
     }
-    else if (rowIndex == 1) {
-        RenderSegment(character, 1);
-        RenderSegment(character, 3);
-        RenderSegment(character, 2);
+    else if (rowIndex == 1) {        
+        RenderSegment(character, 1, scaledRowIndex);
+        RenderSegment(character, 3, scaledRowIndex);
+        RenderSegment(character, 2, scaledRowIndex);
+        cout << string(Spacing, ' ');
     }
     else if (rowIndex == 2)
     {
-        RenderSegment(character, 4);
-        RenderSegment(character, 6);
-        RenderSegment(character, 5);
+        RenderSegment(character, 4, scaledRowIndex);
+        RenderSegment(character, 6, scaledRowIndex);
+        RenderSegment(character, 5, scaledRowIndex);
+        cout << string(Spacing, ' ');
     }
 }
 
+void SevenSegmentRenderer::RenderLineEnd(int rowIndex, int scaledRowIndex)
+{
+    // suppress newlines if we're on the top row, unless it's the top iteration of the top row
+    if(rowIndex > 0 || scaledRowIndex == 0)
+    {
+        cout << endl;
+    }
+}

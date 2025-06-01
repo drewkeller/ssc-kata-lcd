@@ -10,8 +10,9 @@ class NineSegmentRenderer : public Renderer<NINE_SEGMENTS_COUNT>
 {
     public:
     NineSegmentRenderer();
-    virtual void RenderCharacterRow(char ch, int rowIndex) override;
+    virtual void RenderCharacterRow(char ch, int rowIndex, int scaledRowIndex) override;
     void RenderLeftColumnSpace();
     void RenderMiddleColumnSpace();
     void RenderRightColumnSpace();
+    void RenderLineEnd(int rowIndex, int scaledRowIndex) override;
 };

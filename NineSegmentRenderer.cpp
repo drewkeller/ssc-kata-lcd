@@ -59,36 +59,48 @@ void NineSegmentRenderer::RenderRightColumnSpace()
     cout << " ";
 }
 
-void NineSegmentRenderer::RenderCharacterRow(char ch, int rowIndex)
+void NineSegmentRenderer::RenderCharacterRow(char ch, int rowIndex, int scaledRowIndex)
 {
     NineSegmentGlyph character = NineSegmentsCharacterMap.at(ch);
-    if(rowIndex == 0)
+    if(rowIndex == 0 && scaledRowIndex == 0)
     {
         RenderLeftColumnSpace();
-        RenderSegment(character, 0);
+        RenderSegment(character, 0, scaledRowIndex);
         RenderRightColumnSpace();
     }
     else if (rowIndex == 1) {
-        RenderSegment(character, 1);
+        RenderSegment(character, 1, scaledRowIndex);
         RenderMiddleColumnSpace();
-        RenderSegment(character, 2);
+        RenderSegment(character, 2, scaledRowIndex);
     }
-    else if (rowIndex == 2)
+    else if (rowIndex == 2 && scaledRowIndex + 1 == ScaleY)
     {
-        RenderSegment(character, 3);
-        RenderSegment(character, 4);
-        RenderSegment(character, 5);
+        RenderSegment(character, 3, scaledRowIndex);
+        RenderSegment(character, 4, scaledRowIndex);
+        RenderSegment(character, 5, scaledRowIndex);
     }
     else if (rowIndex == 3) {
-        RenderSegment(character, 6);
+        RenderSegment(character, 6, scaledRowIndex);
         RenderMiddleColumnSpace();
-        RenderSegment(character, 7);
+        RenderSegment(character, 7, scaledRowIndex);
     }
-    else if(rowIndex == 4)
+    else if(rowIndex == 4 && scaledRowIndex + 1 == ScaleY)
     {
         RenderLeftColumnSpace();
-        RenderSegment(character, 8);
+        RenderSegment(character, 8, scaledRowIndex);
         RenderRightColumnSpace();
     }
 }
 
+void NineSegmentRenderer::RenderLineEnd(int rowIndex, int scaledRowIndex)
+{
+    bool suppressed = (rowIndex == 0 && scaledRowIndex > 0)
+        || (rowIndex == 2 && scaledRowIndex + 1 < ScaleY)
+        || (rowIndex == 4 && scaledRowIndex + 1 < ScaleY);
+
+    // suppress newlines if we're on the top row, unless it's the top iteration of the top row
+    if(!suppressed)
+    {
+        cout << endl;
+    }
+}
