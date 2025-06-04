@@ -157,11 +157,24 @@ void Renderer<N>::RenderDebugLine(const string& inputString, int characterWidth,
     // print the actual character below each rendered character (right aligned)
     for(int pos = 0; pos < inputString.length(); ++pos)
     {
-        // print across character width, leaving one position for the actual character
+        // width = 1: "x"
+        // width = 2: "x "
+        // width = 3: " x "
+        // width = 4: " x  "
+        // width = 5: "  x  "
         int width = (Width - 2) * ScaleX + 2;
-        if(width > 0) cout << string(width - 1, ' ');
-        
-        cout << inputString[pos];
+
+        cout << inputString[pos]; // uncomment to left-align
+
+        int paddingLeft = (width - 1) / 2;
+        if(paddingLeft > 0) cout << string(paddingLeft, ' ');
+
+        //cout << inputString[pos]; // uncomment to center-align
+
+        int paddingRight = width - 1 - paddingLeft;
+        if(paddingRight > 0) cout << string(paddingRight, ' ');
+
+        //cout << inputString[pos]; // uncomment to right-align
     }
     cout << endl << endl;
 }
