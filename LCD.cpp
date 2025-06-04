@@ -28,5 +28,8 @@ int main(int argc, char* argv[])
     sevenSegmentsRenderer.SetScale(1, 3).RenderString(testString);
     sevenSegmentsRenderer.SetScale(5, 3).RenderString(testString);
 
+    sevenSegmentsRenderer.SetScale(1, 1).RenderString("hello, world");
+    nineSegmentsRenderer.SetScale(1, 1).RenderString("hello, world");
+
     return 0;
 }
