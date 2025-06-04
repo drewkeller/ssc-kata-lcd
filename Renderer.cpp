@@ -38,9 +38,10 @@ Renderer<N>::Renderer(const std::map<char,SegmentsGlyph<N>>& characterMap, const
 , Height(height)
 , Width(width)
 , Spacing(spacing)
-, Symbols(symbolsMap)
 , ScaleX(1)
 , ScaleY(1)
+, CharacterMap(characterMap)
+, Symbols(symbolsMap)
 {
 }
 
@@ -108,6 +109,8 @@ void Renderer<N>::RenderSegment(SegmentsGlyph<N> character, int segmentIndex, in
 template<int N>
 void Renderer<N>::RenderString(const string& inputString)
 {
+    constexpr uchar UNKNOWN_CHAR_GLYPH = '?';
+
     cout << "Rendering: '" << inputString << "' ";
     cout << "(" << Name << ") ";
     cout << "Scale: x=" << ScaleX << ", y=" << ScaleY << endl;
@@ -119,7 +122,14 @@ void Renderer<N>::RenderString(const string& inputString)
             for(int pos = 0; pos < inputString.length(); ++pos)
             {
                 char ch = inputString[pos];
-                RenderCharacterRow(ch, row, scaledRowIndex);
+                if(CharacterMap.find(ch) != CharacterMap.end())
+                {
+                    RenderCharacterRow(ch, row, scaledRowIndex);
+                }
+                else
+                {
+                    RenderCharacterRow(UNKNOWN_CHAR_GLYPH, row, scaledRowIndex);
+                }
             }
             RenderLineEnd(row, scaledRowIndex);
         }

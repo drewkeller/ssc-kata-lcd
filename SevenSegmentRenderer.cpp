@@ -22,6 +22,7 @@ map<char, SevenSegmentGlyph> SevenSegmentsCharacterMap = {
     { '7', { 1, 0, 1, 0, 0, 1, 0 } },
     { '8', { 1, 1, 1, 1, 1, 1, 1 } },
     { '9', { 1, 1, 1, 1, 0, 1, 1 } },
+    { '?', { 0, 0, 0, 1, 0, 0, 0 } }, // (dash) output this for unknown characters
 };
 
 constexpr bool H = true;  // Horizontal
